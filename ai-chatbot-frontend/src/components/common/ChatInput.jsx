@@ -19,6 +19,11 @@ const ChatInput = ({
     }
   };
 
+  // Monitor fileInputRef changes
+  React.useEffect(() => {
+    console.log('onFileUpload type:', typeof onFileUpload);
+  }, [fileInputRef, onFileUpload]);
+
   return (
     <div className="bg-white border-t border-gray-200 p-4">
       <div className="max-w-4xl mx-auto">
@@ -27,7 +32,13 @@ const ChatInput = ({
             {showFileUpload && (
               <div className="flex items-center space-x-2 mb-2">
                 <button
-                  onClick={() => fileInputRef.current?.click()}
+                  onClick={() => {       
+                    if (fileInputRef.current) {
+                      fileInputRef.current.click();
+                    } else {
+                      alert('File input not available. Please refresh the page.');
+                    }
+                  }}
                   className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
                   title="Upload files"
                 >
@@ -41,9 +52,16 @@ const ChatInput = ({
                   multiple
                   accept={fileTypes}
                   onChange={(e) => {
-                    console.log('File input change event:', e);
-                    console.log('Files selected:', e.target.files);
-                    onFileUpload(e);
+                    
+                    if (e && e.target && e.target.files) {                  
+                      try {
+                        onFileUpload(e);
+                      } catch (error) {
+                        console.error('Error calling onFileUpload:', error);
+                      }
+                    } else {
+                      console.error('Event target files:', e?.target?.files);
+                    }
                   }}
                   className="hidden"
                 />

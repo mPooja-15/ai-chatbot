@@ -28,7 +28,7 @@ const ChatHistory = () => {
     setMessages,
     setUploadedFiles,
     sendMessage,
-    handleFileUpload
+    uploadFile
   } = useChat(chatId);
 
   useEffect(() => {
@@ -80,7 +80,7 @@ const ChatHistory = () => {
 
     for (const file of files) {
       try {
-        await handleFileUpload(file);
+        await uploadFile(file);
       } catch (error) {
         console.error(`Failed to upload ${file.name}:`, error);
         const errorMessage = createErrorMessage(`Failed to upload ${file.name}: ${error.message}`);
