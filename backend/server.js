@@ -58,7 +58,7 @@ app.use(cors({
       'http://localhost:4173', 
       'http://127.0.0.1:4173',
        // Production frontend
-      'https://ai-chatbot-eta-red.vercel.app',
+      'https://ai-chatbot-mu-gray.vercel.app',
       'https://ai-chatbot-gtyp.onrender.com'
     ];
     
