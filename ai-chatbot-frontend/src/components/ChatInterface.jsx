@@ -24,6 +24,7 @@ const ChatInterface = () => {
         messages,
         inputMessage,
         isLoading,
+        isUploading,
         chatTitle,
         uploadedFiles,
         selectedFiles,
@@ -168,6 +169,7 @@ const ChatInterface = () => {
                 onFileUpload={handleFileUploadEvent}
                 fileInputRef={fileInputRef}
                 isLoading={isLoading}
+                isUploading={isUploading}
             />
         </div>
     );

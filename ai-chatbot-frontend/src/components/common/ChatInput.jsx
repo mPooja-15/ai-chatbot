@@ -7,6 +7,7 @@ const ChatInput = ({
   onFileUpload,
   fileInputRef,
   isLoading = false,
+  isUploading = false,
   placeholder = "Type your message here... (Press Enter to send, Shift+Enter for new line)",
   showFileUpload = true,
   fileTypes = ".pdf,.csv",
@@ -39,12 +40,17 @@ const ChatInput = ({
                       alert('File input not available. Please refresh the page.');
                     }
                   }}
-                  className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200"
-                  title="Upload files"
+                  disabled={isUploading}
+                  className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  title={isUploading ? "Uploading..." : "Upload files"}
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                  </svg>
+                  {isUploading ? (
+                    <div className="w-5 h-5 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                  ) : (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                    </svg>
+                  )}
                 </button>
                 <input
                   ref={fileInputRef}

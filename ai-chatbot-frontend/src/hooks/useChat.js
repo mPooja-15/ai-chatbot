@@ -5,6 +5,7 @@ export const useChat = (initialChatId = null) => {
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
   const [chatTitle, setChatTitle] = useState('New Chat');
   const [uploadedFiles, setUploadedFiles] = useState([]);
   const [selectedFiles, setSelectedFiles] = useState([]);
@@ -145,6 +146,8 @@ export const useChat = (initialChatId = null) => {
       return null;
     }
 
+    setIsUploading(true);
+    
     try {
       console.log('Starting file upload for:', file.name);
       console.log('Chat ID:', currentChatId);
@@ -184,6 +187,8 @@ export const useChat = (initialChatId = null) => {
     } catch (error) {
       console.error('Error uploading file:', error);
       throw error;
+    } finally {
+      setIsUploading(false);
     }
   }, [currentChatId]);
 
@@ -191,7 +196,6 @@ export const useChat = (initialChatId = null) => {
     const files = Array.from(event.target.files);
     if (!files.length) return;
 
-    setIsLoading(true);
     const uploadedFiles = [];
 
     for (const file of files) {
@@ -205,7 +209,6 @@ export const useChat = (initialChatId = null) => {
       }
     }
 
-    setIsLoading(false);
     if (fileInputRef.current) {
       fileInputRef.current.value = '';
     }
@@ -230,6 +233,7 @@ export const useChat = (initialChatId = null) => {
     messages,
     inputMessage,
     isLoading,
+    isUploading,
     chatTitle,
     uploadedFiles,
     selectedFiles,
@@ -245,6 +249,7 @@ export const useChat = (initialChatId = null) => {
     setChatTitle,
     setUploadedFiles,
     setMessages,
+    setIsUploading,
     
     // Functions
     scrollToBottom,
